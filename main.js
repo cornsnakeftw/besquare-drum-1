@@ -43,7 +43,16 @@ record_btn.addEventListener("click", () => {
 });
 
 //playback btn chg word
-const playback_btn = document.getElementById("playback");
+//const playback_btn = document.getElementById("playback");
+//playback_btn.addEventListener("click", () => {
+// if (app_mode === "playback") {
+//  playback_btn.textContent = "Playback";
+// record_mode = "";
+//} else {
+//record_btn.textContent = "End record";
+//record_mode = "record";
+//}
+//});
 
 const key_config = [
   { id: "boom", key: "a", sound: boom },
