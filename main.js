@@ -11,9 +11,9 @@ import tom from "./sounds/tom.wav";
 let app_mode = "";
 let record_mode = "";
 let playback_mode = "";
+var start = {};
 const record = [];
 const playback = [];
-var start;
 
 //start button chg
 const start_game_btn = document.getElementById("start_game");
@@ -45,12 +45,12 @@ record_btn.addEventListener("click", () => {
 //playback btn chg word
 //const playback_btn = document.getElementById("playback");
 //playback_btn.addEventListener("click", () => {
-// if (app_mode === "playback") {
-//  playback_btn.textContent = "Playback";
-// record_mode = "";
-//} else {
+//if (app_mode === "playback") {
+// playback_btn.textContent = "Playback";
+//record_mode = "";
+// } else {
 //record_btn.textContent = "End record";
-//record_mode = "record";
+// record_mode = "record";
 //}
 //});
 
