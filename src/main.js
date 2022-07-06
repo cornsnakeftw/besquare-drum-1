@@ -69,6 +69,7 @@ playback_btn.addEventListener("click", () => {
     });
   }
 });
+
 const key_config = [
   { id: "boom", key: "a", sound: boom },
   { id: "clap", key: "s", sound: clap },
@@ -151,6 +152,18 @@ key_config.forEach((k) => {
     if (e.key.toLocaleLowerCase() === k.key) {
       const audio = new Audio(k.sound);
       audio.play();
+
+      /// for animation
+      var element = document.getElementById(k.id);
+      //adding the transition
+      element.classList.add("playing");
+
+      setInterval(removeTransition, 100);
+
+      function removeTransition() {
+        //remove the transition
+        element.classList.remove("playing");
+      }
     }
 
     //Score
@@ -172,4 +185,16 @@ key_config.forEach((k) => {
 
     updateTargets();
   });
+});
+
+//settings btn
+const settings_btn = document.getElementById("settings");
+let is_open = true;
+settings_btn.addEventListener("click", () => {
+  if (is_open) {
+    document.getElementById("settings_container").style.display = "flex";
+  } else {
+    document.getElementById("settings_container").style.display = "none";
+  }
+  is_open = !is_open;
 });
