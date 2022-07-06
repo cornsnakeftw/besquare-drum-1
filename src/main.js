@@ -1,19 +1,19 @@
-import boom from "./sounds/boom.wav";
-import clap from "./sounds/clap.wav";
-import hi_hat from "./sounds/hi_hat.wav";
-import kick from "./sounds/kick.wav";
-import open_hat from "./sounds/open_hat.wav";
-import ride from "./sounds/ride.wav";
-import snare from "./sounds/snare.wav";
-import tink from "./sounds/tink.wav";
-import tom from "./sounds/tom.wav";
+import boom from "../sounds/boom.wav";
+import clap from "../sounds/clap.wav";
+import hi_hat from "../sounds/hi_hat.wav";
+import kick from "../sounds/kick.wav";
+import open_hat from "../sounds/open_hat.wav";
+import ride from "../sounds/ride.wav";
+import snare from "../sounds/snare.wav";
+import tink from "../sounds/tink.wav";
+import tom from "../sounds/tom.wav";
 
 let app_mode = "";
 let record_mode = "";
 let playback_mode = "";
 var start = {};
-const record = [];
-const playback = [];
+let record = [];
+let playback = [];
 
 //start button chg
 const start_game_btn = document.getElementById("start_game");
@@ -30,30 +30,45 @@ start_game_btn.addEventListener("click", () => {
 //record button chg text
 const record_btn = document.getElementById("record");
 record_btn.addEventListener("click", () => {
-  if (app_mode === "record") {
+  if (record_mode === "record") {
     record_btn.textContent = "Record";
     record_mode = "";
+    console.log("test2");
   } else {
     record_btn.textContent = "End record";
     record_mode = "record";
+    console.log("test");
+    record.length = 0;
+    start = Date.now();
   }
 
-  start = Date.now();
   console.log(record);
 });
 
-//playback btn chg word
-//const playback_btn = document.getElementById("playback");
-//playback_btn.addEventListener("click", () => {
-//if (app_mode === "playback") {
-// playback_btn.textContent = "Playback";
-//record_mode = "";
-// } else {
-//record_btn.textContent = "End record";
-// record_mode = "record";
-//}
-//});
+//playback btn
+const playback_btn = document.getElementById("playback");
+playback_btn.addEventListener("click", () => {
+  if (app_mode === "playback") {
+    playback_btn.textContent = "Playback";
+    app_mode = "";
+  } else {
+    playback_btn.textContent = "Stop Playback";
+    app_mode = "playback";
 
+    record.forEach((k) => {
+      console.log(k.key);
+      key_config.forEach((m) => {
+        if (k.key === m.key) {
+          console.log(m.sound);
+          setTimeout(() => {
+            const audio = new Audio(m.sound);
+            audio.play();
+          }, k.duration);
+        }
+      });
+    });
+  }
+});
 const key_config = [
   { id: "boom", key: "a", sound: boom },
   { id: "clap", key: "s", sound: clap },
@@ -136,25 +151,25 @@ key_config.forEach((k) => {
     if (e.key.toLocaleLowerCase() === k.key) {
       const audio = new Audio(k.sound);
       audio.play();
-
-      // If user key matches current target key then we increment
-      if (app_mode === "game" && new_array[getActualPosition()] === e.key) {
-        current_index++;
-        score++;
-      }
-
-      if (record_mode === "record") {
-        record.push({
-          key: e.key,
-          duration: Date.now() - start,
-        });
-        console.log(record);
-      }
-
-      if (getActualPosition() >= new_array.length - padding_count - 1) {
-      }
-
-      updateTargets();
     }
+
+    //Score
+    //If user key matches current target key then we increment
+    if (app_mode === "game" && new_array[getActualPosition()] === e.key) {
+      current_index++;
+      score++;
+    }
+
+    if (record_mode === "record") {
+      record.push({
+        key: e.key,
+        duration: Date.now() - start,
+      });
+    }
+
+    if (getActualPosition() >= new_array.length - padding_count - 1) {
+    }
+
+    updateTargets();
   });
 });
